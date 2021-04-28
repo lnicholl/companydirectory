@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Company Directory</title>
+    <meta name="description" content="A mobile first website demonstrating CRUD functionality, that allows for creation, retrieval and modification of company personnel through interaction with an SQL database">
+    <meta name="author" content="Laurie Nicholl">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="libs/css/styles.css">
+    <link rel="shortcut icon" href="libs/images/favicon.ico">
+
+    <!-- Font Awesome + Bootstrap + DataTables CSS -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <!-- nav -->
+
+    <nav class="navbar fixed-top navbar-expand-mr navbar-light bg-light">
+      <span class="navbar-brand"><span id="bold">COMPANY</span> DIRECTORY</span>
+    </nav>
+
+    <!-- get all buttons -->
+
+    <div class="button-box col-lg-12">
+      <button class="btn btn-light btn-lg shadow" id="getAllDepartments">Departments</button>
+      <button class="btn btn-light btn-lg shadow" id="getAllLocations">Locations</button>
+    </div>
+
+    <!-- main data table -->
+
+    <div id="main" class="container">
+      <div class="mx-auto bg-white rounded shadow">
+        <div class="table-responsive">
+          <table class="table table-fixed" id="mainTable" style="width:100%">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" id="firstNameCol">First Name</th>
+                <th scope="col" id="lastNameCol">Last Name</th>
+                <th scope="col" id="jobTitleCol">Job Title</th>
+                <th scope="col" id="emailCol">Email</th>
+                <th scope="col" id="departmentCol">Department</th>
+                <th scope="col" id="locationCol">Location</th>
+                <th scope="col" id="editEmployeeCol"></th>
+                <th scope="col" id="deleteEmployeeCol"></th>
+              </tr>
+            </thead>
+            <tbody id="mainData">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- departments modal -->
+
+    <div class="modal" tabindex="-1" id="departmentsModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Departments</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <button class="btn btn-success" id="addDepartment">+ Add</button>
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody id="departmentsData">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- add department modal -->
+
+    <div class="modal" tabindex="-1" id="addDepartmentModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add department</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="needs-validation">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" value="" class="form-control" id="addDepartmentName" placeholder="Please enter a name" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="location">Location:</label>
+                <select class="form-control custom-select" id="addDepartmentLocation" placeholder="Choose a location" required>
+                  <option value="">Please select a location</option>
+                </select>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please select an option.</div>
+              </div>
+              <br>
+              <div class="form-group form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" id="addDepartmentCheckbox" required>All of the above is correct.
+                  <div class="valid-feedback">Valid.</div>
+                  <div class="invalid-feedback">Check this checkbox to continue.</div>
+                </label>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary" id="insertDepartment">Add department</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- edit department modal -->
+
+    <div class="modal" tabindex="-1" id="editDepartmentModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit department</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="needs-validation">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" value="" class="form-control" id="editDepartmentName" placeholder="Please enter a name" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="location">Location:</label>
+                <select class="form-control custom-select" id="editDepartmentLocation" placeholder="Choose a location" required>
+                  <option value="">Please select a new location</option>
+                </select>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please select an option.</div>
+              </div>
+              <br>
+              <div class="form-group form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" id="editDepartmentCheckbox" required>All of the above is correct.
+                  <div class="valid-feedback">Valid.</div>
+                  <div class="invalid-feedback">Check this checkbox to continue.</div>
+                </label>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary" id="updateDepartment">Edit department</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- delete department modal -->
+
+    <div class="modal" tabindex="-1" id="deleteDepartmentModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete department</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete <strong><span id="deleteDepartmentName"></span></strong> from the directory?</p>
+            <button type="submit" class="btn btn-danger" id="deleteDepartment" data-dismiss="modal">Delete department</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- locations modal -->
+
+    <div class="modal" tabindex="-1" id="locationsModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Locations</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <button class="btn btn-success" id="addLocation">+ Add</button>
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody id="locationsData">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- add location modal -->
+    
+    <div class="modal" tabindex="-1" id="addLocationModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add location</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="needs-validation">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" value="" class="form-control" id="addLocationName" placeholder="Please enter a name" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" id="addLocationCheckbox" required> All of the above is correct.
+                  <div class="valid-feedback">Valid.</div>
+                  <div class="invalid-feedback">Check this checkbox to continue.</div>
+                </label>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary" id="insertLocation">Add location</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- edit location modal -->
+
+    <div class="modal" tabindex="-1" id="editLocationModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit location</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="needs-validation">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" value="" class="form-control" id="editLocationName" placeholder="Please enter a name" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" id="editLocationCheckbox" required>All of the above is correct.
+                  <div class="valid-feedback">Valid.</div>
+                  <div class="invalid-feedback">Check this checkbox to continue.</div>
+                </label>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary" id="updateLocation">Edit location</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- delete location modal -->
+
+    <div class="modal" tabindex="-1" id="deleteLocationModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete location</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete <strong><span id="deleteLocationName"></span></strong> from the directory?</p>
+            <button type="submit" class="btn btn-danger" id="deleteLocation" data-dismiss="modal">Delete location</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- add employee modal -->
+
+    <div class="modal" tabindex="-1" id="addEmployeeModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add employee</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="needs-validation">
+              <div class="form-group">
+                <label for="name">First Name:</label>
+                <input type="text" value="" class="form-control" id="addEmployeeFirstName" placeholder="Please enter first name" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="name">Last Name:</label>
+                <input type="text" value="" class="form-control" id="addEmployeeLastName" placeholder="Please enter last name" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="name">Job Title:</label>
+                <input type="text" value="" class="form-control" id="addEmployeeJobTitle" placeholder="Please enter a job title" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="name">Email:</label>
+                <input type="text" value="" class="form-control" id="addEmployeeEmail" placeholder="Please enter an email address" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="location">Department:</label>
+                <select class="form-control custom-select" id="addEmployeeDepartment" placeholder="Choose a department" required>
+                  <option value="">Please select a department</option>
+                </select>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please select an option.</div>
+              </div>
+              <br>
+              <div class="form-group form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" id="addEmployeeCheckbox" required>All of the above is correct.
+                  <div class="valid-feedback">Valid.</div>
+                  <div class="invalid-feedback">Check this checkbox to continue.</div>
+                </label>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary" id="insertEmployee">Add employee</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- edit employee modal -->
+
+    <div class="modal" tabindex="-1" id="editEmployeeModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit employee</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="needs-validation">
+              <div class="form-group">
+                <label for="name">First Name:</label>
+                <input type="text" value="" class="form-control" id="editEmployeeFirstName" placeholder="Please enter first name" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="name">Last Name:</label>
+                <input type="text" value="" class="form-control" id="editEmployeeLastName" placeholder="Please enter last name" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="name">Job Title:</label>
+                <input type="text" value="" class="form-control" id="editEmployeeJobTitle" placeholder="Please enter a job title" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="name">Email:</label>
+                <input type="text" value="" class="form-control" id="editEmployeeEmail" placeholder="Please enter an email address" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="location">Department:</label>
+                <select class="form-control custom-select" id="editEmployeeDepartment" placeholder="Choose a department" required>
+                  <option value="">Please select a department</option>
+                </select>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please select an option.</div>
+              </div>
+              <br>
+              <div class="form-group form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" id="editEmployeeCheckbox" required>All of the above is correct.
+                  <div class="valid-feedback">Valid.</div>
+                  <div class="invalid-feedback">Check this checkbox to continue.</div>
+                </label>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary" id="updateEmployee">Edit employee</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- delete employee modal -->
+
+    <div class="modal" tabindex="-1" id="deleteEmployeeModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete employee</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete <strong><span id="deleteEmployeeName"></span></strong> from the directory?</p>
+            <button type="submit" class="btn btn-danger" id="deleteEmployee" data-dismiss="modal">Delete employee</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery, Bootstrap, Font Awesome, DataTables JS -->
+
+    <script type="application/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script src='https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script type="application/javascript" src="libs/js/script.js"></script>
+  </body>
+</html>

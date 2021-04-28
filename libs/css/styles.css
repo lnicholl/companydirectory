@@ -1,0 +1,121 @@
+nav {
+	top: 0;
+	position: relative;
+}
+
+.navbar-brand {
+	letter-spacing: 0.1em;
+	margin-left: 1em;
+	font-family: 'Roboto', sans-serif;
+}
+
+.button-box {
+	text-align: center;
+	margin-top: 12vh;
+	padding-left: 10%;
+	padding-right: 10%;
+	margin-bottom: 5vh;
+}
+
+.dt-button {
+	font-weight: bold;
+	color: #fff !important;
+	background-color: #198754 !important;
+	border-color: #fff !important;
+}
+
+#getAllDepartments {
+	margin-right: 1vh;
+	border: 1px solid #ced4da;
+	font-family: 'Roboto', sans-serif;
+}
+
+#getAllLocations {
+	margin-left: 1vh;
+	border: 1px solid #ced4da;
+	font-family: 'Roboto', sans-serif;
+}
+
+#mainTable {
+	font-family: 'Roboto', sans-serif;
+}
+
+#main {
+	font-family: 'Roboto', sans-serif;
+	margin-top: 5vh;
+}
+
+.table-responsive {
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
+
+.modal {
+	margin: 0 auto;
+  margin-top: 5vh;
+	position: relative;
+	width: 160px;
+	font-family: 'Roboto', sans-serif;
+	border-radius: 1em;
+}
+
+.close {
+	background: #fff;
+	border: 0;
+}
+
+h5.modal-title {
+	margin: auto;
+	font-weight: bold;
+}
+
+select.form-control {
+	-moz-appearance: menulist;
+	-webkit-appearance: menulist;
+	appearance: menulist;
+}
+
+#bold {
+	font-weight: bold;
+}
+
+.centered {
+	vertical-align: middle;
+	text-align: center;
+}
+
+#deleteIcon {
+	color: #dc3545;
+	cursor: pointer;
+}
+
+#editIcon {
+	color: #198754;
+	cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	#jobTitleCol,
+	#departmentCol,
+	#locationCol,
+	#jobTitleData,
+	#departmentData,
+	#locationData {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	#jobTitleCol,
+	#emailCol,
+	#departmentCol,
+	#locationCol,
+	#jobTitleData,
+	#emailData,
+	#departmentData,
+	#locationData {
+		display: none;
+	}
+}
