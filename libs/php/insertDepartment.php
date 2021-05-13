@@ -1,9 +1,4 @@
 <?php
-
-	// example use from browser
-	// http://localhost/companydirectory/libs/php/insertDepartment.php?name=New%20Department&locationID=6
-
-	// remove next two lines for production
 	
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);

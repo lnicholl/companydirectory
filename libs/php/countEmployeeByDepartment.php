@@ -27,9 +27,7 @@
 
 	}	
 
-	// $_REQUEST used for development / debugging. Remember to cange to $_POST for production
-
-	$query = 'DELETE FROM location WHERE id = ' . $_REQUEST['id'];
+	$query = 'SELECT COUNT(id) as pc FROM personnel WHERE departmentID = ' . $_REQUEST['id'];
 
 	$result = $conn->query($query);
 	
@@ -47,12 +45,20 @@
 		exit;
 
 	}
+   
+   	$data = [];
+
+	while ($row = mysqli_fetch_assoc($result)) {
+
+		array_push($data, $row);
+
+	}
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = [];
+	$output['data'] = $data;
 	
 	mysqli_close($conn);
 

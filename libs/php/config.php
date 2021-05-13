@@ -1,10 +1,10 @@
 <?php
 
-	$cd_host = "127.0.0.1";
-	$cd_port = 3306;
+  $cd_host = 'db5002358797.hosting-data.io';
+  $cd_port = 3306;
 	$cd_socket = "";
-	$cd_user = "root"; // user name
-	$cd_password = null; // password
-	$cd_dbname = "companydirectory"; // database name
+  $cd_dbname = 'dbs1889817';
+  $cd_user = 'dbu558436';
+  $cd_password = 'companyDirectory88!';
 
 ?>

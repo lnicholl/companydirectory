@@ -1,6 +1,15 @@
+.loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background: url('../images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249, 0.5);
+}
+
 nav {
 	top: 0;
-	position: relative;
+	position: fixed;
 }
 
 .navbar-brand {
@@ -9,40 +18,39 @@ nav {
 	font-family: 'Roboto', sans-serif;
 }
 
-.button-box {
-	text-align: center;
-	margin-top: 12vh;
-	padding-left: 10%;
-	padding-right: 10%;
-	margin-bottom: 5vh;
+#getAllDepartments,
+#getAllLocations {
+	border: 1px solid #ced4da;
+	border-radius: 20%;
+	padding: 0.7em;
+	background-color: #fff;
+	margin-right: 1em;
+}
+
+#getAllDepartments:hover,
+#getAllLocations:hover {
+	cursor: pointer;
+	background-color: #f8f9fa;
 }
 
 .dt-button {
-	font-weight: bold;
+	font-weight: 400 !important;
 	color: #fff !important;
 	background-color: #198754 !important;
-	border-color: #fff !important;
+	border: 1px solid #198754 !important;
+	border-radius: .25rem !important;
+	font-family: 'Roboto', sans-serif !important;
+	font-size: 1rem !important;
+	padding: .375rem .75rem !important;
 }
 
-#getAllDepartments {
-	margin-right: 1vh;
-	border: 1px solid #ced4da;
+.container {
 	font-family: 'Roboto', sans-serif;
-}
-
-#getAllLocations {
-	margin-left: 1vh;
-	border: 1px solid #ced4da;
-	font-family: 'Roboto', sans-serif;
+	margin-top: 8vh;
 }
 
 #mainTable {
 	font-family: 'Roboto', sans-serif;
-}
-
-#main {
-	font-family: 'Roboto', sans-serif;
-	margin-top: 5vh;
 }
 
 .table-responsive {
@@ -50,25 +58,29 @@ nav {
 	padding-right: 3%;
 	padding-top: 2%;
 	padding-bottom: 2%;
+	height: 78vh
 }
 
 .modal {
 	margin: 0 auto;
-  margin-top: 5vh;
 	position: relative;
 	width: 160px;
 	font-family: 'Roboto', sans-serif;
 	border-radius: 1em;
 }
 
-.close {
-	background: #fff;
-	border: 0;
+h5.modal-title {
+	font-weight: bold;
+	padding-left: 0.5em;
 }
 
-h5.modal-title {
-	margin: auto;
-	font-weight: bold;
+.modal-content {
+	padding-bottom: 1vh;
+}
+
+.modal-body {
+	max-height: 70vh;
+	overflow-y: auto;
 }
 
 select.form-control {
@@ -105,6 +117,14 @@ select.form-control {
 	#locationData {
 		display: none;
 	}
+	#getAllDepartments,
+	#getAllLocations {
+		padding: 0.8em;
+		margin-right: 0.8em;
+	}
+	.navbar-brand {
+		margin-left: 0.8em;
+	}
 }
 
 @media only screen and (max-width: 767px) {
@@ -117,5 +137,13 @@ select.form-control {
 	#departmentData,
 	#locationData {
 		display: none;
+	}
+	#getAllDepartments,
+	#getAllLocations {
+		padding: 0.9em;
+		margin-right: 0.4em;
+	}
+	.navbar-brand {
+		margin-left: 0.4em;
 	}
 }

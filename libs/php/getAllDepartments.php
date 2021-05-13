@@ -1,6 +1,4 @@
 <?php
-
-	// remove next two lines for production
 	
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
@@ -29,7 +27,7 @@
 
 	}	
 
-	$query = 'SELECT id, name, locationID FROM department';
+	$query = 'SELECT d.id, d.name, d.locationID, l.name as location FROM department d LEFT JOIN location l ON (l.id = d.locationID)';
 
 	$result = $conn->query($query);
 	
